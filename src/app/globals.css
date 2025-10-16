@@ -1,8 +1,22 @@
 @import "tailwindcss";
 
 :root {
- 
- 
+  /* Theme palette */
+  --c1: #A9CED6; /* light aqua */
+  --c2: #6F86A3; /* steel blue */
+  --c3: #EDC6C6; /* soft pink */
+  --c4: #F8E8E8; /* very light pink */
+  --ink: #000000;
+
+  /* App colors */
+  --background: var(--c4);   /* light background */
+  --foreground: var(--ink);  /* text color */
+
+  /* (optional) extras used by components */
+  --accent: var(--c2);
+  --border: var(--c2);
+  --muted: var(--c1);
+  --card: #ffffff;
 }
 
 @theme inline {
@@ -14,8 +28,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-  
-    
+    /* dark mode tuned to your palette */
+    --background: #1D2A38;   /* deep steel blue derived from --c2 */
+    --foreground: #F8E8E8;   /* light ink for contrast */
+
+    --accent: #A9CED6; /* shift accents lighter in dark */
+    --border: #6F86A3;
+    --muted: #2A3B4E;
+    --card: #233446;
   }
 }
 
