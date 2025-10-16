@@ -11,7 +11,7 @@ export default function AddProductDescription() {
 
   // Card-only flags
   const [customerNameFlag, setCustomerNameFlag] = useState("no"); // "yes" | "no"
-  const [logo, setLogo] = useState("no");                         // "yes" | "no"
+  const [logo, setLogo] = useState("no"); // "yes" | "no"
 
   // Standee-only
   const [iconsCount, setIconsCount] = useState(0);
@@ -140,195 +140,202 @@ export default function AddProductDescription() {
   };
 
   return (
-    <div className="mx-auto max-w-2xl p-6">
-      <h1 className="mb-4 text-xl font-semibold">Add Product Description</h1>
+    <div className="mx-auto max-w-2xl p-4 sm:p-6">
+      {/* Card wrapper using theme vars */}
+      <div className="rounded-2xl border bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] shadow-md shadow-[color:var(--muted)]/30">
+        <div className="rounded-t-2xl bg-gradient-to-r from-[var(--c3)] via-[var(--c1)] to-[var(--c2)] px-5 py-4">
+          <h1 className="text-base sm:text-lg font-semibold text-[var(--foreground)]">
+            Add Product Description
+          </h1>
+        </div>
 
-      <form onSubmit={submit} className="space-y-5">
-        {/* Category */}
-        <label className="block">
-          <span className="text-sm font-medium">Category</span>
-          <select
-            className="mt-1 w-full rounded-lg border px-3 py-2"
-            value={category}
-            onChange={(e) => onCategoryChange(e.target.value)}
-            required
-          >
-            <option value="">Select category</option>
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </label>
+        <form onSubmit={submit} className="space-y-5 p-4 sm:p-6">
+          {/* Category */}
+          <label className="block">
+            <span className="text-sm font-medium">Category</span>
+            <select
+              className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--foreground)] outline-none focus:ring-2 focus:ring-[var(--accent)]/30 focus:border-[var(--accent)]"
+              value={category}
+              onChange={(e) => onCategoryChange(e.target.value)}
+              required
+            >
+              <option value="">Select category</option>
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        {/* Card / Standee */}
-        {category && category !== "Bundal" && (
-          <>
-            <label className="block">
-              <span className="text-sm font-medium">Product Name</span>
-              <input
-                className="mt-1 w-full rounded-lg border px-3 py-2"
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-                placeholder={`Enter ${category} name`}
-              />
-            </label>
+          {/* Card / Standee */}
+          {category && category !== "Bundal" && (
+            <>
+              <label className="block">
+                <span className="text-sm font-medium">Product Name</span>
+                <input
+                  className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--foreground)] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[var(--accent)]/30 focus:border-[var(--accent)]"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                  placeholder={`Enter ${category} name`}
+                />
+              </label>
 
-            {/* Card: flags */}
-            {category === "Card" && (
-              <>
-                <label className="block">
-                  <span className="text-sm font-medium">Customer Name (YES/NO)</span>
+              {/* Card: flags */}
+              {category === "Card" && (
+                <>
+                  <label className="block">
+                    <span className="text-sm font-medium">Customer Name (YES/NO)</span>
+                    <select
+                      className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--foreground)] outline-none focus:ring-2 focus:ring-[var(--accent)]/30 focus:border-[var(--accent)]"
+                      value={customerNameFlag}
+                      onChange={(e) => setCustomerNameFlag(e.target.value)}
+                    >
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                    {customerNameFlag !== "yes" && (
+                      <p className="mt-1 text-xs text-rose-600">
+                        For Card, Customer Name must be YES.
+                      </p>
+                    )}
+                  </label>
+
+                  <label className="block">
+                    <span className="text-sm font-medium">Has Logo? (must be YES for Card)</span>
+                    <select
+                      className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--foreground)] outline-none focus:ring-2 focus:ring-[var(--accent)]/30 focus:border-[var(--accent)]"
+                      value={logo}
+                      onChange={(e) => setLogo(e.target.value)}
+                    >
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                    {logo !== "yes" && (
+                      <p className="mt-1 text-xs text-rose-600">
+                        For Card, Logo must be set to YES.
+                      </p>
+                    )}
+                  </label>
+                </>
+              )}
+
+              {/* Standee: Icons + Logo */}
+              {category === "Standee" && (
+                <>
+                  <label className="block">
+                    <span className="text-sm font-medium">Icons Count</span>
+                    <select
+                      className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--foreground)] outline-none focus:ring-2 focus:ring-[var(--accent)]/30 focus:border-[var(--accent)]"
+                      value={iconsCount}
+                      onChange={(e) => setIconsCount(Number(e.target.value))}
+                    >
+                      {ICON_COUNT_OPTIONS.map((n) => (
+                        <option key={n} value={n}>
+                          {n}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label className="block">
+                    <span className="text-sm font-medium">Has Logo?</span>
+                    <select
+                      className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--foreground)] outline-none focus:ring-2 focus:ring-[var(--accent)]/30 focus:border-[var(--accent)]"
+                      value={logo}
+                      onChange={(e) => setLogo(e.target.value)}
+                    >
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                  </label>
+                </>
+              )}
+            </>
+          )}
+
+          {/* Bundal */}
+          {category === "Bundal" && (
+            <>
+              <label className="block">
+                <span className="text-sm font-medium">Bundle Name</span>
+                <input
+                  className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--foreground)] placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-[var(--accent)]/30 focus:border-[var(--accent)]"
+                  value={bundleName}
+                  onChange={(e) => setBundleName(e.target.value)}
+                  placeholder="e.g., M Size / Combo Pack"
+                />
+              </label>
+
+              <label className="block">
+                <span className="text-sm font-medium">Select Product</span>
+                <div className="mt-1 flex flex-col gap-2 sm:flex-row sm:items-center">
                   <select
-                    className="mt-1 w-full rounded-lg border px-3 py-2"
-                    value={customerNameFlag}
-                    onChange={(e) => setCustomerNameFlag(e.target.value)}
+                    className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--foreground)] outline-none focus:ring-2 focus:ring-[var(--accent)]/30 focus:border-[var(--accent)]"
+                    value={selectedProductId}
+                    onChange={(e) => setSelectedProductId(e.target.value)}
                   >
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                  </select>
-                  {customerNameFlag !== "yes" && (
-                    <p className="mt-1 text-xs text-red-600">
-                      For Card, Customer Name must be YES.
-                    </p>
-                  )}
-                </label>
-
-                <label className="block">
-                  <span className="text-sm font-medium">Has Logo? (must be YES for Card)</span>
-                  <select
-                    className="mt-1 w-full rounded-lg border px-3 py-2"
-                    value={logo}
-                    onChange={(e) => setLogo(e.target.value)}
-                  >
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                  </select>
-                  {logo !== "yes" && (
-                    <p className="mt-1 text-xs text-red-600">
-                      For Card, Logo must be set to YES.
-                    </p>
-                  )}
-                </label>
-              </>
-            )}
-
-            {/* Standee: Icons + Logo */}
-            {category === "Standee" && (
-              <>
-                <label className="block">
-                  <span className="text-sm font-medium">Icons Count</span>
-                  <select
-                    className="mt-1 w-full rounded-lg border px-3 py-2"
-                    value={iconsCount}
-                    onChange={(e) => setIconsCount(Number(e.target.value))}
-                  >
-                    {ICON_COUNT_OPTIONS.map((n) => (
-                      <option key={n} value={n}>
-                        {n}
+                    <option value="">Select a product</option>
+                    {availableProducts.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.product_name} ({p.category})
                       </option>
                     ))}
                   </select>
-                </label>
-
-                <label className="block">
-                  <span className="text-sm font-medium">Has Logo?</span>
-                  <select
-                    className="mt-1 w-full rounded-lg border px-3 py-2"
-                    value={logo}
-                    onChange={(e) => setLogo(e.target.value)}
+                  <button
+                    type="button"
+                    className="rounded-lg px-4 py-2 text-sm font-semibold text-[var(--card)] bg-[var(--foreground)] hover:opacity-90 active:scale-[.98] transition disabled:opacity-60"
+                    onClick={addProductToBundle}
+                    disabled={!selectedProductId}
                   >
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                  </select>
-                </label>
-              </>
-            )}
-          </>
-        )}
+                    Add
+                  </button>
+                </div>
+                <p className="mt-1 text-xs text-slate-600">
+                  Icons & logo info auto-applied from selected products.
+                </p>
+              </label>
 
-        {/* Bundal */}
-        {category === "Bundal" && (
-          <>
-            <label className="block">
-              <span className="text-sm font-medium">Bundle Name</span>
-              <input
-                className="mt-1 w-full rounded-lg border px-3 py-2"
-                value={bundleName}
-                onChange={(e) => setBundleName(e.target.value)}
-                placeholder="e.g., M Size / Combo Pack"
-              />
-            </label>
+              {selectedProducts.length > 0 && (
+                <div className="mt-3 rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 p-3">
+                  <div className="mb-2 text-sm font-medium">Selected Products:</div>
+                  <ul className="space-y-1 text-sm">
+                    {selectedProducts.map((p) => (
+                      <li key={p.id} className="flex items-center justify-between">
+                        <span>
+                          {p.product_name} ({p.category}) – Logo: {p.logo}
+                        </span>
+                        <button
+                          type="button"
+                          className="text-rose-600 text-xs hover:underline"
+                          onClick={() => removeProduct(p.id)}
+                        >
+                          ✕
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
 
-            <label className="block">
-              <span className="text-sm font-medium">Select Product</span>
-              <div className="flex items-center gap-2 mt-1">
-                <select
-                  className="flex-1 rounded-lg border px-3 py-2"
-                  value={selectedProductId}
-                  onChange={(e) => setSelectedProductId(e.target.value)}
-                >
-                  <option value="">Select a product</option>
-                  {availableProducts.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.product_name} ({p.category})
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  className="rounded-lg bg-blue-600 text-white px-3 py-2 text-sm"
-                  onClick={addProductToBundle}
-                  disabled={!selectedProductId}
-                >
-                  Add
-                </button>
-              </div>
-              <p className="mt-1 text-xs text-gray-500">
-                Icons & logo info auto-applied from selected products.
-              </p>
-            </label>
+          {/* Preview */}
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--muted)]/20 p-3 text-xs">
+            <div className="mb-1 font-medium">Payload Preview</div>
+            <pre className="whitespace-pre-wrap">{JSON.stringify(payload, null, 2)}</pre>
+          </div>
 
-            {selectedProducts.length > 0 && (
-              <div className="mt-3 border rounded-lg p-3 bg-gray-50">
-                <div className="text-sm font-medium mb-2">Selected Products:</div>
-                <ul className="space-y-1 text-sm">
-                  {selectedProducts.map((p) => (
-                    <li key={p.id} className="flex justify-between items-center">
-                      <span>
-                        {p.product_name} ({p.category}) – Logo: {p.logo}
-                      </span>
-                      <button
-                        type="button"
-                        className="text-red-600 text-xs"
-                        onClick={() => removeProduct(p.id)}
-                      >
-                        ✕
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </>
-        )}
-
-        {/* Preview */}
-        <div className="rounded-lg bg-gray-50 p-3 text-xs">
-          <div className="mb-1 font-medium">Payload Preview</div>
-          <pre className="whitespace-pre-wrap">{JSON.stringify(payload, null, 2)}</pre>
-        </div>
-
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="rounded-lg bg-black px-4 py-2 text-sm text-white"
-          >
-            Save
-          </button>
-        </div>
-      </form>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="rounded-lg bg-[var(--foreground)] px-5 py-2 text-sm font-semibold text-[var(--card)] hover:opacity-90 active:scale-[.98] transition"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

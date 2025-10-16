@@ -155,7 +155,7 @@ export default function PageForDetail() {
         {/* If already submitted and nothing open, show message */}
         {noOpenButSubmitted && (
           <div className="mb-6 rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-emerald-900">
-            <div className="font-semibold">You already submitted your detail.</div>
+            <div className="font-semibold">You are submitted your detail.</div>
             <div className="text-sm opacity-80">
               If you want to update anything, please contact support.
             </div>
